@@ -1,0 +1,31 @@
+{% extends 'Blog_app/post_detail.html' %}
+{% block comment_block %}
+    <div class="w3-container">
+        <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large" >
+            Comment
+        </button>
+<div class="col-md-12">
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px; ">
+
+                <div class="w3-center"><br>
+                    <span onclick="document.getElementById('id01').style.display='none'"
+                          class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+                          title="Close Modal">&times;</span>
+                </div>
+
+                <form class="w3-container" method="post">
+                    <div class="w3-section">
+                        {% csrf_token %}
+                        <label><b>Leave a Comment</b></label>
+                        <textarea class="form-control" rows="4" placeholder="Add a Comment..." type="text"
+                                  name="comment" required id="id_comment"></textarea>
+
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+</div></div>
+{% endblock %}

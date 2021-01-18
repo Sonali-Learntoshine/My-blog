@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <title>CodeWall</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vs.css' %}">
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+    <style>
+        .comment {
+            margin: 20px 0 20px 20px;
+        }
+
+        body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif
+        }
+
+        img {
+            border-radius: 10px;
+        }
+
+        textarea {
+            width: 280%;
+            height: 150px;
+        }
+
+        @media screen and (max-width: 800px) {
+            textarea {
+                width: 100%;
+                height: 150px;
+            }
+
+        }
+    </style>
+    <body class="w3-light-grey" style="font-size: small">
+
+    <div class="w3-content" style="max-width:1700px;">
+        <!-- Header -->
+        <header class="w3-container w3-center w3-padding-32">
+            <h1 style="font-family:'Times New Roman'; font-size: 60px; "><b>{{ post_detail.heading }}</b></h1>
+        </header>
+
+        <div class="row">
+            <div class="container">
+                <div class="w3-card-4 w3-margin w3-white">
+                    <div class="col-lg-offset-10">
+                        <img src="{{ post_detail.image.url }}" alt="" style="width: 100%">
+
+                        <div class="w3-container">
+                            <h3><b>{{ post_detail.heading }}</b></h3>
+                            <h5>{{ post_detail.description }},
+                                <span class="w3-opacity">{{ post_detail.date }} {{ post_detail.time }}</span></h5>
+
+                            <div class="w3-container" style="background-color: snow; margin-bottom: 25px">
+                                <p>{{ post_detail.body }}</p>
+                                <div class="w3-col m4 w3-hide-small" style="float:right;">
+                                    <div class="course_sales ml-auto"
+                                         style="float: right; font-variant-numeric: tabular-nums;;">&nbsp;
+                                        <span class="fa fa-comment-o fa-1x">&nbsp;</span>{{ post_detail.comment_set.count }}
+                                        <span class="fa fa-eye fa-1x">&nbsp;{{ post_detail.post_view }}</span>
+                                        <span class="fa fa-heart fa-1x" style="color:darkred">&nbsp;</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="w3-row">
+                                    <hr style="border-top: 2px solid black;border-radius: 40px;">
+
+                                    {% if post_detail.code %}
+                                        <div class="course_text">
+                                    <pre class="prettyprint" style="border: none">
+                                        <br>{{ post_detail.code|linenumbers|safe }}
+                                    </pre>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if post_detail.file %}
+                                        <a href="{{ post_detail.file.url }}" download>
+                                            <button class="w3-button w3-card-4 w3-padding-large w3-hover-border-white w3-border w3-round ">
+                                                <b>Download file </b>
+                                            </button>
+                                        </a>
+                                    {% endif %}
+
+                                    {% if post_detail.link %}
+                                        <a href="{{ post.link }}">
+                                            <button class="w3-button w3-padding-large w3-hover-border-white w3-border w3-round w3-card-4">
+                                                <b>Goto Link</b>
+                                            </button>
+                                        </a>
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="course_sales ml-auto"
+                                     style="float: right; font-variant-numeric: tabular-nums;">&nbsp
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                       style="text-decoration: none;color: darkblue;">
+                                        <span class="fa fa-facebook fa-2x">&nbsp;</span>
+                                    </a>
+                                    <a href="https://www.instagram.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                       style="text-decoration: none;color: darkred;">
+                                        <span class="fa fa-instagram fa-2x">&nbsp;</span>
+                                    </a><a href="https://www.whatsapp.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+                                           style="text-decoration: none;color: lime;">
+                                        <span class="fa fa-whatsapp fa-2x">&nbsp;</span>
+                                    </a>
+                                    <a style="text-decoration: none; color: deepskyblue; "
+                                       href="https://twitter.com/home?status=I'm%20going%20to%20learn%20to%20Code...%20Come%20build%20an%20web%20apsp%20with%20me!%20%23CFE%20and%20@justinmitchel%20{{ request.build_absolute_uri }}">
+                                        <span class="fa fa-twitter fa-2x">&nbsp;</span>
+                                    </a>
+                                    <a style="text-decoration: none;"
+                                       href="https://www.linkedin.com/shareArticle?mini=true&url=http://swiftforentrepreneurs.com/&title=Be%20first%20%7C%20Join%20Swift%20for%20Entrepreneurs&summary=Swift%20for%20Entrepreneurs%20is%20a%20project-based%20programming%20course%20for%20non-technical%20founders.%20We'll%20learn%20how%20to%20build%20iOS%20apps%20from%20scratch%20using%20Apple's%20new%20programming%20language:%20Swift.%20Be%20first%20and%20learn%20with%20me!&source={{ request.build_absolute_uri }}">
+                                        <span class="fa fa-linkedin fa-2x" style="color:darkred">&nbsp;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="container">
+            <div class="col-lg-offset-10">
+                <div class="course_search" id='comment' style="padding: 10px 20px 20px 20px;">
+                    <!-- Comments Form -->
+                    <div class="card my-4">
+                        <h5 class="card-header">Drop Comment:</h5>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                <textarea class="form-control" rows="4" placeholder="Add a comment......" type="text"
+                                          name="comment" required id="id_content"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    {% for comment in post_detail.comment_set.all %}
+                        <div class="comment">
+                            <strong>{{ comment.user_name }}:
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{ comment.comment }}
+                            <div class="date" style="float: right">{{ comment.created_on }}</div>
+                            <hr style="border-top: 2px solid gray;border-radius: 40px;">
+                        </div>
+                    {% empty %}
+                        <p>No comments here yet :(</p>
+                    {% endfor %}
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <br>
+    <div class="w3-row">
+        <!-- Blog entries -->
+        <div class="w3-col l8 s12">
+            <!-- Blog entry -->
+
+            <!-- END BLOG ENTRIES -->
+        </div>
+
+    </div>
+    <br>
+    <!-- END w3-content -->
+
+
+    </body>
+{% endblock %}

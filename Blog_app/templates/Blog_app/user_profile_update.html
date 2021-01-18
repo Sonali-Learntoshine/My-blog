@@ -1,0 +1,161 @@
+{% load crispy_forms_filters %}
+
+<!doctype html>
+<html lang="en">
+<head>
+
+    <style>
+        body {
+            background-image: url("https://animal-wallpaper.com/wallpaper/keyboard-wallpaper-hd-For-Background-HD-Wallpaper.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+
+        .container {
+            margin-top: 80px;
+            margin-bottom: 80px;
+            margin-left: 80px;
+            margin-right: 80px;
+            border: red;
+            background-color: white;
+            box-shadow: 0 10px 10px 10px;
+            padding: 5px;
+            overflow: hidden;
+        }
+
+
+        h1 {
+            text-align: center;
+            background-color: darkslateblue;
+        }
+
+        .prof-img img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 3px;
+        }
+
+
+        .prog-page {
+            border: 1px solid #ddd;
+            box-shadow: 1px 1px 5px #ddd;
+            position: relative;
+        }
+
+        .header-info {
+            position: relative;
+            padding-left: 25px;
+            background: #666;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .prof-info .info i {
+            padding: 8px 9px 0px 9px;
+            box-shadow: 1px 1px 5px #ddd;
+            background: #0099ff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .header-info i {
+            padding-right: 8px;
+            font-size: 25px;
+        }
+
+
+        .tags-label i {
+            color: #fff;
+        }
+
+        .tags-label span {
+            padding: 4px;
+            border: 1px solid #fff;
+            padding: 4px 7px 3px 9px
+        }
+
+        .header-info a {
+            cursor: pointer;
+            float: right;
+            position: absolute;
+        }
+
+        .header-btn-edit {
+            float: right;
+            top: 15px;
+            position: absolute;
+            right: 12px;
+        }
+
+        .header-btn-edit a {
+            background: #2b7dc3;
+            color: #fff;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 5px #eee;
+        }
+
+        .header-btn-edit a i {
+            color: #fff;
+            padding-right: 8px;
+        }
+
+    </style>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container" style="margin-top:10px;">
+    <div class="prog-page">
+        <div class="header-title header-btn">
+            <div class="header-info">
+                <h2><i class="fa fa-info-circle"></i>Profile Information</h2>
+            </div>
+            <div class="header-btn-edit">
+                <a href="{% url 'index' %}" type="button">Back</a>
+            </div>
+        </div>
+
+
+        <div class="card-body">
+            <p><span style="color: red"> * </span> fields are required</p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">{{ field.label_tag }}
+                            {% if field.field.required %}<span style="color: red">*</span>{% endif %}
+                        </label>
+                        <div class="col-sm-9">
+                            {{ field }}
+                            {% if field.errors %}
+                                <h6 style="color: red">{{ field.errors }}</h6>
+                                {% if field.help_text %}
+                                    <span class="fa fa-info-circle" style="color: #c82333"></span>
+                                    <h6 style="color: #c82333">{{ field.help_text }}</h6>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <input class="btn btn-outline-success" type="submit" value="Submit" style="width: 100%"><br><br>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

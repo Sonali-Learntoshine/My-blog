@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500,900,100,300,700,400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" href="/media/codewall.png">
+    <title>CodeWall</title>
+
+</head>
+<body>
+
+<!-- Navigation -->
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" style="width: auto; height: 50px">
+    <div class="w3-container w3-center w3-animate-zoom">
+        <a class="navbar-brand " href="/"><h4 style="color:whitesmoke">
+            <img src="/media/codewall.png" style="height: 20px; width: 20px;"> &nbsp
+            <b style="color: deepskyblue; font-family: Monaco; font-size: 20px">CodeWall</b></h4></a></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"  style=" background-color: #333333">
+        <ul class="navbar-nav mr-auto">
+            &nbsp&nbsp
+        </ul>
+
+        <ul class="navbar-nav" style="color: seashell; font-family: Monaco; font-size: 20px; margin-right: 40px;" >
+
+            {% if request.user.is_authenticated %}
+                <li>
+                 <div class="header-info">
+                    <h2 style="margin-right: 500px; height: 20px;">Welcome! &nbsp;{{ request.user }}</h2>
+                </div>
+                </li>
+
+                <li class="active"><strong>
+                    <a class="nav-link" href="/" style="color:#3875d7">
+                        <i class="fa fa-home"></i> Home</a>
+                </strong></li>
+                <li><strong>
+                    <a class="nav-link" href="{% url 'logout' %}" style="color:#3875d7"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+                </strong></li>
+
+
+                <li class="nav-item dropdown">
+                    <strong><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#3875d7">
+                        Profile
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown"
+                             style="background-color: #333333; font-family: Monaco; font-size: 20px; width: 100%;">
+                            <a class="dropdown-item" href="{% url 'user_profile' user.id %}" style="color:#3875d7"><b>Show
+                                Profile</b></a>
+                            <a class="dropdown-item" href="{% url 'user_profile_update' user.id %}"
+                               style="color:#3875d7"><b>Update Profile</b></a>
+
+                        </div>
+                    </strong>
+                </li>
+
+            {% else %}
+                <li><strong>
+                    <a class="nav-link" href="{% url 'signup' %}"><b><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;SignUp</b></a>
+                </strong></li>
+                <li><strong>
+                    <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Login</a>
+                </strong></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<br>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+{% block content %}
+
+{% endblock %}
+
+<br><br><br>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-margin-top align-bottom"
+        style="background-color: black; color: white;">
+
+    <div class="w3-bar">
+        {% if is_paginated %}
+            <div class="w3-center">
+
+                <div class="w3-bar w3-round">
+
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}"
+                           class="w3-bar-item w3-button">&laquo;</a>
+                    {% else %}
+                        <a href="?page={{ page_obj.paginator.num_pages }}"
+                           class="w3-bar-item w3-button">&laquo;</a>
+                    {% endif %}
+
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <a href="?page={{ i }}" class="w3-bar-item w3-button w3-white">{{ i }}</a>
+                        {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                            <a href="?page={{ i }}" class="w3-bar-item w3-button">{{ i }}</a>
+                        {% endif %}
+
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="w3-bar-item w3-button">&raquo;</a>
+                    {% else %}
+                        <a href="?page=1" class="w3-bar-item w3-button">&laquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+                <h5 class="font-weight-bold text-uppercase mb-4">About</h5>
+                <p> To be prepared for the demands of the 21st century—and to take advantage of its opportunities—it is
+                    essential that more of our students today learn basic computer programming skills, no matter what
+                    field of work they want to pursue as <i>Learning to code is learning to create and innovate.</i></p>
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+                <!-- Contact details -->
+                <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+                <ul class="list-unstyled">
+                    <li><p><i class="fa fa-home mr-3"></i>Sahjanwa, Gorakhpur </p></li>
+                    <li><p><i class="fa fa-envelope mr-2"></i>singhsonaligkp@gmail.com</p></li>
+                    <li><p><i class="fa fa-phone mr-3"></i> +91 9935036116</p></li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+
+        </div>
+        <hr>
+        <!-- Grid row -->
+        <div class="w3-center" style="color:black ;">
+            <div class="w3-bar w3-round">
+                <a href="https://www.facebook.com/singhsonaligkp" class="my-nice-button" style="color: white">
+                    <i class="fa fa-facebook-official"></i>
+                </a>&nbsp; &nbsp;
+                <a href="https://github.com/Sonali-Learntoshine" class="my-nice-button" style="color: white">
+                    <i class="fa fa-github"></i>
+                </a>&nbsp; &nbsp;
+                <a href="https://www.linkedin.com/in/sonali-singh-05993015b" class="my-nice-button"
+                   style="color: white">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!-- Footer Links -->
+</footer>
+
+</body>
+</html>
