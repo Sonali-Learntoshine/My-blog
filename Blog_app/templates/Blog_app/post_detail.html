@@ -78,6 +78,9 @@
                                     {% endif %}
 
                                     {% if post_detail.file %}
+                                         <div style = "padding:10px">
+                                            <embed type = "application/pdf" src="{{ post_detail.file.url }}" style = "width:100%; height: 500px; "/>
+                                        </div>
                                         <a href="{{ post_detail.file.url }}" download>
                                             <button class="w3-button w3-card-4 w3-padding-large w3-hover-border-white w3-border w3-round ">
                                                 <b>Download file </b>
